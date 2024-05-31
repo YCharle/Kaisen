@@ -5,12 +5,13 @@ class Player:
     def __init__(self, name, hp = 100):
         self.name = name
         self.hp = hp
+        
 
     def __repr__(self):
         return "Welcome to Academia Kaisen {name}! You have {health} health points.".format(name=self.name, health=self.hp)
     
-    def Answer_question(self, ans):
-        pass
+    def Answer_question(self):
+        return answer_question()
 
 
     def gain_points(self):
@@ -35,7 +36,7 @@ else:
     print("We need players to continue.")
 
 if list_of_players != []:
-    print("{Player1} your opponent is {Player2} and visa versa".format(Player1=list_of_players[0], Player2=list_of_players[1]))
+    print("Welcome to Academia Kaisen! \n{Player1} your opponent is {Player2} \nThe game is simple. Each one of you will answer a question, starting with {Player1} \nYou both will add points to your total Health Points \nYou both also have Action Points which allow you to to heal \nand add to your Health Points and/or attack your opponent, \ndraining some of their Health Points \nLet's Begin!".format(Player1=list_of_players[0], Player2=list_of_players[1]))
 else:
     print("We need players to continue.")
 
@@ -44,8 +45,22 @@ ks3_questions = {"Which of the following is not in an animal cell?\nCell Membran
 
 points = 0
 p_points = 0
+round_question = []
 
-print(points)      
+def answer_question():
+    for i in range(20):
+       question = random.choice(list(ks3_questions))
+       if question in round_question:
+           continue
+       else:   
+           print(question)
+       round_question.append(question)
+       ans = input("The answer is: ")
+       
+
+
+answer_question()
+#print(points)      
 #ask_answer("yaron")
 #print(list_of_players)
 #print(p1)
