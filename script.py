@@ -6,9 +6,7 @@ class Player:
         self.name = name
         self.hp = hp
         self.p_points = 0
-        #self.op_points = self.points
         
-
     def __repr__(self):
         return "Welcome to Academia Kaisen {name}! You have {health} health points.".format(name=self.name, health=self.hp)
     
@@ -23,13 +21,11 @@ class Player:
          else:   
            print(self.name + ", " + question)
            seen_values.add(question)
-           #round_question.append(question)
+           round_question.append(question)
          ans = input("The answer is: ")
          self.ans = ans
          if self.ans == ks3_questions[question]:
              self.gain_points()
-
-
 
     def gain_points(self):
         self.hp += 250
@@ -85,9 +81,3 @@ p1.heal_attack(p2)
 p2.heal_attack(p1)
 p1.say_winner()
 p2.say_winner()
-
-#print(points)      
-#ask_answer("yaron")
-#print(list_of_players)
-#print(p1)
-#print(p2)
