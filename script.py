@@ -5,7 +5,6 @@ class Player:
     def __init__(self, name, hp = 100):
         self.name = name
         self.hp = hp
-        self.points = 0
         self.p_points = 0
         #self.op_points = self.points
         
@@ -17,11 +16,13 @@ class Player:
         for x in range(5):
          num_list = []
          num_list.append(x)
+         seen_values = set()
          question = random.choice(list(ks3_questions))
          if question in round_question and x in num_list:
             continue
          else:   
            print(self.name + ", " + question)
+           seen_values.add(question)
            #round_question.append(question)
          ans = input("The answer is: ")
          self.ans = ans
@@ -31,24 +32,27 @@ class Player:
 
 
     def gain_points(self):
-        self.points += 250
+        self.hp += 250
         self.p_points = self.p_points + (4 ** 4)
-        return self.points
 
     
-    def heal_attack(self):
+    def heal_attack(self, other_player):
         response = input(self.name + " you have " + str(self.p_points) + " action points, would you like to heal or attack?\n")
         if response == "Heal" or response == 'heal':
-            self.points += self.p_points
+            self.hp += self.p_points
 
         elif response == "Attack" or response == "attack":
-            self.points = self.points - self.p_points
+            other_player.take_damage(self.p_points)
 
         else:
             print("Make sure your response is spelt correctly")
+        
+
+    def take_damage(self, damage):
+        self.hp -= damage
 
     def say_winner(self):
-        print(self.name + " your final score is " + str(self.points))
+        print(self.name + " your final score is " + str(self.hp))
         
     
 player_1 = input("Player 1, input your name: ")
@@ -77,8 +81,8 @@ round_question = []
 
 p1.answer_question()
 p2.answer_question()
-p1.heal_attack()
-p2.heal_attack()
+p1.heal_attack(p2)
+p2.heal_attack(p1)
 p1.say_winner()
 p2.say_winner()
 
