@@ -19,13 +19,27 @@ class Player:
          if question in round_question and x in num_list:
             continue
          else:   
-           print(self.name + ", " + question)
+           # Prints the random question and sets the solution
+           solution = ks3_questions[question]
+           print(f"\n{self.name}, {question}")
+           # Checks if the question has multiple options and sets the answer
+           if type(ks3_questions[question]) is list:
+            for i, answer in enumerate(ks3_questions[question]):
+                print(f"{(i+1)}.- {answer[0]}")
+                if answer[1]:
+                    solution = f"{(i+1)}"
            seen_values.add(question)
            round_question.append(question)
-         ans = input("The answer is: ")
+         ans = input("Enter your answer: ")
          self.ans = ans
-         if self.ans == ks3_questions[question]:
+         #If the answer is an integer: Checks if the player entered a digit and sets the answer as int.
+         if type(ks3_questions[question]) is int:
+            if self.ans.isdigit():
+                self.ans = int(self.ans)
+         if self.ans == solution:
              self.gain_points()
+             # Announces the result
+             print('\nCorrect!\n')
 
     def gain_points(self):
         self.hp += 250
@@ -33,11 +47,12 @@ class Player:
 
     
     def heal_attack(self, other_player):
-        response = input(self.name + " you have " + str(self.p_points) + " action points, would you like to heal or attack?\n")
-        if response == "Heal" or response == 'heal':
+        # Gets the player's answer and sets the input as lowercase with .lower()
+        response = input(self.name + " you have " + str(self.p_points) + " action points, would you like to heal or attack?\n").lower()
+        if response == 'heal':
             self.hp += self.p_points
 
-        elif response == "Attack" or response == "attack":
+        elif response == "attack":
             other_player.take_damage(self.p_points)
 
         else:
@@ -67,10 +82,36 @@ else:
 if list_of_players != []:
     print("\nWelcome to Academia Kaisen! \n{Player1} your opponent is {Player2} \nThe game is simple. Each one of you will answer a question, starting with {Player1} \nYou both will add points to your total Health Points \nYou both also have Action Points which allow you to to heal \nand add to your Health Points or attack your opponent, \ndraining some of their Health Points \nLet's Begin!".format(Player1=list_of_players[0], Player2=list_of_players[1]))
 else:
-    print("We need players to continue.")
+    print("We need players to continue.\n")
 
 
-ks3_questions = {"Which of the following is not in an animal cell?\nCell Membrane\nCell Wall\nCytoplasm\nNucleus\n": "Cell wall", "Which of the folowing about veins is not true?\nSubstances cannot pass through their walls\nThey carry blood to the heart\nThey have no valves\nThey have thin walls\n": "They have no valves", "How many faces does a square-based pyramid have?\n": 5, "The earth is made up of how many layers?\n": 5, "What is the capital of Brazil?\n": "Brasilia", "Spell Synagogue\n": "Synagogue", "Spell Isosceles\n": "Isosceles", "What is the collective noun for a group of crows?\n": "Murder", "What is the plural of chief?\n": "Chiefs", "What is 15 times 17?\n": 255, "What is the most suitable adjective to complete this sentence:\n 'This cake tastes horrible, but that one tastes....'\nHorribler\nHorrible\nMore horible\nMost horrible": "More horrible"}
+ks3_questions = {
+    "Which of the following is not in an animal cell?": [
+        ["Cell Membrane", False],
+        ["Cell Wall", True],
+        ["Cytoplasm", False],
+        ["Nucleus", False]
+        ],
+    "Which of the folowing about veins is not true?": [
+        ["Substances cannot pass through their walls", False],
+        ["They carry blood to the heart", False],
+        ["They have no valves", True],
+        ["They have thin walls", False]
+        ],
+    "How many faces does a square-based pyramid have?": 5,
+    "The earth is made up of how many layers?": 5,
+    "What is the capital of Brazil?": "Brasilia",
+    "Spell Synagogue": "Synagogue",
+    "Spell Isosceles": "Isosceles",
+    "What is the collective noun for a group of crows?\n": "Murder",
+    "What is the plural of chief?": "Chiefs",
+    "What is 15 times 17?": 405,
+    "What is the most suitable adjective to complete this sentence:\n 'This cake tastes horrible, but that one tastes...": [
+        ["Horribler", False],
+        ["Horrible", False],
+        ["More horible", True],
+        ["Most horrible", False]]
+    }
 
 round_question = []
 
